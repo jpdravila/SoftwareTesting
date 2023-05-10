@@ -4,6 +4,8 @@ import br.io.jpdravila.entidades.Filme;
 import br.io.jpdravila.entidades.Locacao;
 import br.io.jpdravila.entidades.Usuario;
 import br.io.jpdravila.utils.DataUtils;
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +23,9 @@ public class LocacaoServiceTeste {
         Locacao locacao = service.alugarFilme(usuario, filme);
 
         //verificacao
+        Assert.assertThat(locacao.getValor(), CoreMatchers.equalTo(5.0));
+        Assert.assertThat(locacao.getValor(), CoreMatchers.is(CoreMatchers.not(6.0)));
+
         Assertions.assertEquals(5.0, locacao.getValor(), 0.01);
         Assertions.assertTrue(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()));
         Assertions.assertTrue(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)));
