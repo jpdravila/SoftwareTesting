@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 public class LocacaoService {
 
+
 	public Locacao alugarFilme(Usuario usuario, Filme filme) {
 		Locacao locacao = new Locacao();
 		locacao.setFilme(filme);
@@ -38,6 +39,8 @@ public class LocacaoService {
 
 		//acao
 		Locacao locacao = service.alugarFilme(usuario, filme);
+
+
 
 		//verificacao
 		Assertions.assertTrue(locacao.getValor() == 5.0);
