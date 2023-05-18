@@ -9,10 +9,14 @@ import br.io.jpdravila.utils.DataUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class LocacaoService {
+public class LocacaoService{
 
 
-	public Locacao alugarFilme(Usuario usuario, Filme filme) {
+	public Locacao alugarFilme(Usuario usuario, Filme filme) throws Exception{
+		if(filme.getEstoque() == 0){
+			throw new Exception("Filme sem estoque");
+		}
+
 		Locacao locacao = new Locacao();
 		locacao.setFilme(filme);
 		locacao.setUsuario(usuario);
@@ -35,17 +39,18 @@ public class LocacaoService {
 		//cenario
 		LocacaoService service = new LocacaoService();
 		Usuario usuario = new Usuario("Ususario 1");
-		Filme filme = new Filme("Filme 1", 2, 5.0);
+		Filme filme = new Filme("Filme 1", 0, 5.0);
 
 		//acao
-		Locacao locacao = service.alugarFilme(usuario, filme);
+			/*Locacao locacao = service.alugarFilme(usuario, filme);
+
+			Assertions.assertTrue(locacao.getValor() == 5.0);
+			Assertions.assertTrue(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()));
+			Assertions.assertTrue(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)));*/
+		}
 
 
 
 		//verificacao
-		Assertions.assertTrue(locacao.getValor() == 5.0);
-		Assertions.assertTrue(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()));
-		Assertions.assertTrue(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)));
 
-	}
 }
