@@ -5,6 +5,8 @@ import java.util.Date;
 import br.io.jpdravila.entidades.Filme;
 import br.io.jpdravila.entidades.Locacao;
 import br.io.jpdravila.entidades.Usuario;
+import br.io.jpdravila.exceptions.FilmeSemEstoqueException;
+import br.io.jpdravila.exceptions.LocadoraException;
 import br.io.jpdravila.utils.DataUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,9 +14,16 @@ import org.junit.jupiter.api.Test;
 public class LocacaoService{
 
 
-	public Locacao alugarFilme(Usuario usuario, Filme filme) throws Exception{
+	public Locacao alugarFilme(Usuario usuario, Filme filme) throws FilmeSemEstoqueException, LocadoraException{
 		if(filme.getEstoque() == 0){
-			throw new Exception("Filme sem estoque");
+			throw new FilmeSemEstoqueException();
+		}
+
+		if(usuario == null){
+			throw new LocadoraException("Usuario vazio!");
+		}
+		if(filme == null){
+			throw new LocadoraException("Filmes vazios!");
 		}
 
 		Locacao locacao = new Locacao();

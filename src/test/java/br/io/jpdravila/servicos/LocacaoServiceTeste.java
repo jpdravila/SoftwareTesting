@@ -3,6 +3,8 @@ package br.io.jpdravila.servicos;
 import br.io.jpdravila.entidades.Filme;
 import br.io.jpdravila.entidades.Locacao;
 import br.io.jpdravila.entidades.Usuario;
+import br.io.jpdravila.exceptions.FilmeSemEstoqueException;
+import br.io.jpdravila.exceptions.LocadoraException;
 import br.io.jpdravila.utils.DataUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -55,7 +57,8 @@ public class LocacaoServiceTeste {
 
     }
 
-    @Test(expected=Exception.class)
+    //Elegante
+    @Test(expected= FilmeSemEstoqueException.class)
     public void testeLocacao_filmeSemEstoque() throws Exception{
         //cenario
         LocacaoService service = new LocacaoService();
@@ -67,7 +70,10 @@ public class LocacaoServiceTeste {
 
 
     }
-    @Test
+
+    //Com a criação da forma elegante foi necessario apenas a criação de uma classe Exception para
+    //o mesmo
+    /*@Test
     public void testeLocacao_filmeSemEstoque_2(){
         //cenario
         LocacaoService service = new LocacaoService();
@@ -97,5 +103,35 @@ public class LocacaoServiceTeste {
         //acao
         service.alugarFilme(usuario, filme);
 
+    }*/
+
+    //Robusta
+    @Test
+    public void testLocacao_usuarioVazio() throws FilmeSemEstoqueException{
+       //Cenário
+       LocacaoService service = new LocacaoService();
+       Filme filme = new Filme("Filme Dois", 1, 4.0);
+
+       //Ação
+        try {
+            service.alugarFilme(null, filme);
+            Assert.fail();
+        }
+        catch (LocadoraException e){
+            Assert.assertThat(e.getMessage(), is("Usuario vazio!"));
+        }
     }
+
+    @Test
+    public void testLocacao_FilmeVazio() throws FilmeSemEstoqueException, LocadoraException{
+        //Cenario
+        LocacaoService service = new LocacaoService();
+        Usuario usuario = new Usuario("Usuario 1");
+
+        //Acao
+        service.alugarFilme(usuario, null);
+
+        exception.expect(LocadoraException.class);
+    }
+
 }
