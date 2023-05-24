@@ -7,9 +7,7 @@ import br.io.jpdravila.exceptions.FilmeSemEstoqueException;
 import br.io.jpdravila.exceptions.LocadoraException;
 import br.io.jpdravila.utils.DataUtils;
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
@@ -23,11 +21,33 @@ import static org.junit.Assert.assertTrue;
 
 public class LocacaoServiceTeste {
 
+    private LocacaoService service;
+
     @Rule
     public ErrorCollector error = new ErrorCollector();
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    /*@Before
+    public void setup(){
+        System.out.println("Before/Antes");
+    }
+
+    @After
+    public void tearDown(){
+        System.out.println("After/Depois");
+    }
+
+    @BeforeClass
+    public static void setupClass(){
+        System.out.println("Before Class/Antes");
+    }
+
+    @AfterClass
+    public static void tearDownClass(){
+        System.out.println("After Class/Depois");
+    }*/
 
     @Test
     public void teste() throws Exception{
@@ -120,7 +140,9 @@ public class LocacaoServiceTeste {
         catch (LocadoraException e){
             Assert.assertThat(e.getMessage(), is("Usuario vazio!"));
         }
+        System.out.println("Forma robusta");
     }
+
 
     @Test
     public void testLocacao_FilmeVazio() throws FilmeSemEstoqueException, LocadoraException{
@@ -128,10 +150,12 @@ public class LocacaoServiceTeste {
         LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
 
+        exception.expect(LocadoraException.class);
+        exception.expectMessage("Filme vazio");
         //Acao
         service.alugarFilme(usuario, null);
 
-        exception.expect(LocadoraException.class);
+        System.out.println("Forma nova");
     }
 
 }
