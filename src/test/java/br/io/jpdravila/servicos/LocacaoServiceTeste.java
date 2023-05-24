@@ -11,7 +11,9 @@ import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static java.util.function.Predicate.not;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -54,10 +56,10 @@ public class LocacaoServiceTeste {
         //cenario
         LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Ususario 1");
-        Filme filme = new Filme("Filme 1", 2, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 5.0));
 
         //acao
-        Locacao locacao = service.alugarFilme(usuario, filme);
+        Locacao locacao = service.alugarFilme(usuario, filmes);
 
 
 
@@ -83,10 +85,10 @@ public class LocacaoServiceTeste {
         //cenario
         LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Ususario 1");
-        Filme filme = new Filme("Filme 1", 0, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 0, 4.0));
 
         //acao
-        service.alugarFilme(usuario, filme);
+        service.alugarFilme(usuario, filmes);
 
 
     }
@@ -130,11 +132,11 @@ public class LocacaoServiceTeste {
     public void testLocacao_usuarioVazio() throws FilmeSemEstoqueException{
        //Cenário
        LocacaoService service = new LocacaoService();
-       Filme filme = new Filme("Filme Dois", 1, 4.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 5.0));
 
        //Ação
         try {
-            service.alugarFilme(null, filme);
+            service.alugarFilme(null, filmes);
             Assert.fail();
         }
         catch (LocadoraException e){
