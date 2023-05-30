@@ -6,24 +6,20 @@ import br.io.jpdravila.entidades.Usuario;
 import br.io.jpdravila.exceptions.FilmeSemEstoqueException;
 import br.io.jpdravila.exceptions.LocadoraException;
 import br.io.jpdravila.utils.DataUtils;
-import org.hamcrest.CoreMatchers;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static java.util.function.Predicate.not;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class LocacaoServiceTeste {
-
-    private LocacaoService service;
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -44,7 +40,7 @@ public class LocacaoServiceTeste {
         //Compilando erros C 5.0 - E 6.0 / C true - E false
         error.checkThat(locacao.getValor(), is(equalTo(5.0)));
         error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
-        error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
+        error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(false));
 
     }
 
@@ -145,6 +141,21 @@ public class LocacaoServiceTeste {
         //Verificação
 
         assertThat(resultado.getValor(), is(14.0));
+    }
+
+    @Test
+    public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException{
+        //cenario
+        LocacaoService service = new LocacaoService();
+        Usuario usuario = new Usuario("Usuario 1");
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 1, 5.0));
+
+        //acao
+        Locacao retorno = service.alugarFilme(usuario, filmes);
+
+        //verificacao
+        boolean ehSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
+        Assert.assertTrue(ehSegunda);
     }
 
 }

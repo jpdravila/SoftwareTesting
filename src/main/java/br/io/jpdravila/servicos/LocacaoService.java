@@ -8,8 +8,9 @@ import br.io.jpdravila.entidades.Usuario;
 import br.io.jpdravila.exceptions.FilmeSemEstoqueException;
 import br.io.jpdravila.exceptions.LocadoraException;
 import br.io.jpdravila.utils.DataUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static br.io.jpdravila.utils.DataUtils.adicionarDias;
 
 public class LocacaoService{
 
@@ -47,9 +48,11 @@ public class LocacaoService{
 		locacao.setValor(valorTotal);
 		//Entrega no dia seguinte
 		Date dataEntrega = new Date();
-		dataEntrega = DataUtils.adicionarDias(dataEntrega, 1);
+		dataEntrega = adicionarDias(dataEntrega, 1);
+		if(DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY)) {
+			dataEntrega = adicionarDias(dataEntrega, 1);
+		}
 		locacao.setDataRetorno(dataEntrega);
-		
 		//Salvando a locacao...	
 		//TODO adicionar método para salvar
 		
