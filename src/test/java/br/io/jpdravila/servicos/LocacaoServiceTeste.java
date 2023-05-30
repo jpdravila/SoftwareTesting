@@ -29,6 +29,9 @@ public class LocacaoServiceTeste {
 
     @Test
     public void deveAlugarFilme() throws Exception{
+
+        Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+
         //cenario
         LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Ususario 1");
@@ -40,7 +43,7 @@ public class LocacaoServiceTeste {
         //Compilando erros C 5.0 - E 6.0 / C true - E false
         error.checkThat(locacao.getValor(), is(equalTo(5.0)));
         error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
-        error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(false));
+        error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
 
     }
 
@@ -145,6 +148,7 @@ public class LocacaoServiceTeste {
 
     @Test
     public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException{
+        Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
         //cenario
         LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
