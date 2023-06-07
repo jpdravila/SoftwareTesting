@@ -94,8 +94,9 @@ public class LocacaoServiceTeste {
         System.out.println("Forma nova");
     }
 
-    @Test
-    public void devePagar75PctNoFilme3() throws FilmeSemEstoqueException, LocadoraException {
+    //Métodos transferidos para package br.io.jpdravila.servicos.CalculoValorLocacaoTeste;
+    /*@Test
+    public void devePagar75PctNoFilme2() throws FilmeSemEstoqueException, LocadoraException {
         //Cenario
         Usuario usuario = new Usuario("Usuario 1");
         List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 4.0), new Filme("Filme 2", 2, 4.0), new Filme("Filme 3", 2, 4.0));
@@ -121,7 +122,7 @@ public class LocacaoServiceTeste {
     }
 
     @Test
-    public void devePagar25PctNoFilme3() throws FilmeSemEstoqueException, LocadoraException {
+    public void devePagar25PctNoFilme4() throws FilmeSemEstoqueException, LocadoraException {
         //Cenario
         Usuario usuario = new Usuario("Usuario 1");
         List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 4.0), new Filme("Filme 2", 2, 4.0), new Filme("Filme 3", 2, 4.0), new Filme("Filme 4", 2, 4.0), new Filme("Filme 5", 2, 4.0));
@@ -134,7 +135,7 @@ public class LocacaoServiceTeste {
     }
 
     @Test
-    public void devePagar0PctNoFilme3() throws FilmeSemEstoqueException, LocadoraException {
+    public void devePagar0PctNoFilme5() throws FilmeSemEstoqueException, LocadoraException {
         //Cenario
         Usuario usuario = new Usuario("Usuario 1");
         List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 4.0), new Filme("Filme 2", 2, 4.0), new Filme("Filme 3", 2, 4.0), new Filme("Filme 4", 2, 4.0), new Filme("Filme 5", 2, 4.0), new Filme("Filme 6", 2, 4.0));
@@ -144,7 +145,7 @@ public class LocacaoServiceTeste {
         //Verificação
 
         assertThat(resultado.getValor(), is(14.0));
-    }
+    }*/
 
     @Test
     public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException{
