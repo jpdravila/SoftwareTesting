@@ -5,6 +5,8 @@ import br.io.jpdravila.entidades.Locacao;
 import br.io.jpdravila.entidades.Usuario;
 import br.io.jpdravila.exceptions.FilmeSemEstoqueException;
 import br.io.jpdravila.exceptions.LocadoraException;
+import br.io.jpdravila.matchers.DiaSemanaMatcher;
+import br.io.jpdravila.matchers.MatchersProprios;
 import br.io.jpdravila.utils.DataUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
@@ -15,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static br.io.jpdravila.matchers.MatchersProprios.caiEm;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -161,6 +164,9 @@ public class LocacaoServiceTeste {
         //verificacao
         boolean ehSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
         Assert.assertTrue(ehSegunda);
+
+
+        assertThat(retorno.getDataRetorno(), MatchersProprios.caiNumaSegunda());
     }
 
 }
